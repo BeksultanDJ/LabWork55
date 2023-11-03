@@ -1,13 +1,14 @@
 import './App.css';
 import Ingredients from './Ingredients';
+import Burger from './Burger';
 
 function App() {
 
 
   return (
-    <>
-      <Ingredients/>
-    </>
+    <div className="App">
+        <Burger/>
+    </div>
   )
 }
 
