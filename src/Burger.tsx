@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Ingredients from './Ingredients';
 
 function Burger() {
-    const [elements, setElements] = useState<string[]>([]);
+    const [selectedIngredients, setSelectedIngredients] = useState<{ [key: string]: number }>({});
 
-    const handleCreateElement = (element) => {
-        setElements([...elements, element]);
+    const handleIngredientChange = (newIngredients: { [key: string]: number }) => {
+        setSelectedIngredients(newIngredients);
     };
 
     return (
@@ -15,13 +15,18 @@ function Burger() {
                     <div className="Seeds1"></div>
                     <div className="Seeds2"></div>
                 </div>
-                {elements.map((element, index) => (
-                    <div key={index} className={element}></div>
-                ))}
+                {Object.keys(selectedIngredients).map((ingredientName, index) => {
+                    const ingredientCount = selectedIngredients[ingredientName];
+                    const elements = [];
+                    for (let i = 0; i < ingredientCount; i++) {
+                        elements.push(<div key={`${ingredientName}-${i}`} className={ingredientName}></div>);
+                    }
+                    return elements;
+                })}
                 <div className="BreadBottom"></div>
                 <p>Price=111</p>
             </div>
-            <Ingredients onIngredientChange={handleCreateElement} elements={elements} />
+            <Ingredients onIngredientChange={handleIngredientChange} selectedIngredients={selectedIngredients} />
         </div>
     );
 }
