@@ -9,6 +9,8 @@ a:hover {
 }
 
 body {
+    font-family: "Toppan Bunkyu Gothic";
+    color: white;
     max-width: 1100px;
     padding: 15px;
   margin: 0 auto;
