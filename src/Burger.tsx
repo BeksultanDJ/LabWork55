@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Ingredients from './Ingredients';
-import { INGREDIENTS } from './ArrIngredients';
+import {INGREDIENTS} from './ArrIngredients';
 
 function Burger() {
     const [selectedIngredients, setSelectedIngredients] = useState<{ [key: string]: number }>({});
@@ -34,7 +34,7 @@ function Burger() {
                 <div className="BreadBottom"></div>
                 <p className="Price">Price = {burgerPrice} som</p>
             </div>
-            <Ingredients onIngredientChange={handleIngredientChange} selectedIngredients={selectedIngredients} />
+            <Ingredients onIngredientChange={handleIngredientChange} selectedIngredients={selectedIngredients}/>
         </div>
     );
 }
