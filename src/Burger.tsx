@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import Ingredients from './Ingredients';
+import { INGREDIENTS } from './ArrIngredients';
 
 function Burger() {
     const [selectedIngredients, setSelectedIngredients] = useState<{ [key: string]: number }>({});
+    const [burgerPrice, setBurgerPrice] = useState(30);
 
     const handleIngredientChange = (newIngredients: { [key: string]: number }) => {
         setSelectedIngredients(newIngredients);
+
+        const newBurgerPrice = 30 +
+            Object.keys(newIngredients).reduce((price, ingredient) => {
+                return price + (INGREDIENTS.find((item) => item.name === ingredient)?.price || 0) * newIngredients[ingredient];
+            }, 0);
+        setBurgerPrice(newBurgerPrice);
     };
 
     return (
@@ -24,7 +32,7 @@ function Burger() {
                     return elements;
                 })}
                 <div className="BreadBottom"></div>
-                <p>Price=111</p>
+                <p className="Price">Price = {burgerPrice} som</p>
             </div>
             <Ingredients onIngredientChange={handleIngredientChange} selectedIngredients={selectedIngredients} />
         </div>
