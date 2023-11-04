@@ -1,21 +1,21 @@
 import React from 'react';
-import { INGREDIENTS } from './ArrIngredients';
+import {INGREDIENTS} from './ArrIngredients';
 
 interface IngredientsProps {
     onIngredientChange: (selectedIngredients: { [key: string]: number }) => void;
     selectedIngredients: { [key: string]: number };
 }
 
-function Ingredients({ onIngredientChange, selectedIngredients }: IngredientsProps) {
+function Ingredients({onIngredientChange, selectedIngredients}: IngredientsProps) {
     const increaseQuantity = (ingredientName: string) => {
-        const updatedIngredients = { ...selectedIngredients };
+        const updatedIngredients = {...selectedIngredients};
         updatedIngredients[ingredientName] = (selectedIngredients[ingredientName] || 0) + 1;
         onIngredientChange(updatedIngredients);
     };
 
     const decreaseQuantity = (ingredientName: string) => {
         if (selectedIngredients[ingredientName] && selectedIngredients[ingredientName] > 0) {
-            const updatedIngredients = { ...selectedIngredients };
+            const updatedIngredients = {...selectedIngredients};
             updatedIngredients[ingredientName] -= 1;
             onIngredientChange(updatedIngredients);
         }
@@ -25,11 +25,12 @@ function Ingredients({ onIngredientChange, selectedIngredients }: IngredientsPro
         <div className="addIngredientsBlock">
             {INGREDIENTS.map((ingredient) => (
                 <div key={ingredient.name} className="IngredientsBtn">
-                    <img className="ingredient" src={ingredient.image} alt={ingredient.name} />
+                    <button onClick={() => increaseQuantity(ingredient.name)}>
+                        <img className="ingredient" src={ingredient.image} alt={ingredient.name}/>
+                    </button>
                     <span>{ingredient.name}</span>
                     <span>{selectedIngredients[ingredient.name] || 0}</span>
-                    <button onClick={() => increaseQuantity(ingredient.name)}>+</button>
-                    <button onClick={() => decreaseQuantity(ingredient.name)}>-</button>
+                    <button onClick={() => decreaseQuantity(ingredient.name)}>Remove</button>
                 </div>
             ))}
         </div>
