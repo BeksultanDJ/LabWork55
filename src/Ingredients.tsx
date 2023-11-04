@@ -1,76 +1,39 @@
-import baconImg from './assets/bacon.png';
-import saladImg from './assets/salad.png';
-import cheeseImg from './assets/cheese.png';
-import cutletImg from './assets/cutlet.png';
-import React, { useState } from "react";
+import React from 'react';
+import { INGREDIENTS } from './ArrIngredients';
 
-function Ingredients({ onIngredientChange, elements }) {
-    const [products, setProducts] = useState<{
-        bacon: number;
-        salad: number;
-        cheese: number;
-        cutlet: number;
-    }>({
-        bacon: 0,
-        salad: 0,
-        cheese: 0,
-        cutlet: 0,
-    });
+interface IngredientsProps {
+    onIngredientChange: (selectedIngredients: { [key: string]: number }) => void;
+    selectedIngredients: { [key: string]: number };
+}
 
-    const increaseQuantity = (product) => {
-        setProducts({
-            ...products,
-            [product]: products[product] + 1,
-        });
-        onIngredientChange(product);
-    }
+function Ingredients({ onIngredientChange, selectedIngredients }: IngredientsProps) {
+    const increaseQuantity = (ingredientName: string) => {
+        const updatedIngredients = { ...selectedIngredients };
+        updatedIngredients[ingredientName] = (selectedIngredients[ingredientName] || 0) + 1;
+        onIngredientChange(updatedIngredients);
+    };
 
-    const decreaseQuantity = (product) => {
-        if (products[product] > 0) {
-            setProducts({
-                ...products,
-                [product]: products[product] - 1,
-            });
-            onIngredientChange(product);
+    const decreaseQuantity = (ingredientName: string) => {
+        if (selectedIngredients[ingredientName] && selectedIngredients[ingredientName] > 0) {
+            const updatedIngredients = { ...selectedIngredients };
+            updatedIngredients[ingredientName] -= 1;
+            onIngredientChange(updatedIngredients);
         }
-    }
-
-    const handleCreateElement = (ingredient) => {
-        onIngredientChange(ingredient);
     };
 
     return (
         <div className="addIngredientsBlock">
-            <div className="IngredientsBtn">
-                <img className="ingredient" src={baconImg} alt="bacon"/>
-                <span>Bacon</span>
-                <span>{products.bacon}</span>
-                <button onClick={() => { increaseQuantity('bacon'); handleCreateElement('Bacon'); }}>+</button>
-                <button onClick={() => decreaseQuantity('bacon')}>-</button>
-            </div>
-            <div className="IngredientsBtn">
-                <img className="ingredient" src={saladImg} alt="salad"/>
-                <span>Salad</span>
-                <span>{products.salad}</span>
-                <button onClick={() => { increaseQuantity('salad'); handleCreateElement('Salad'); }}>+</button>
-                <button onClick={() => decreaseQuantity('salad')}>-</button>
-            </div>
-            <div className="IngredientsBtn">
-                <img className="ingredient" src={cutletImg} alt="cutlet"/>
-                <span>Cutlet</span>
-                <span>{products.cutlet}</span>
-                <button onClick={() => { increaseQuantity('cutlet'); handleCreateElement('Meat'); }}>+</button>
-                <button onClick={() => decreaseQuantity('cutlet')}>-</button>
-            </div>
-            <div className="IngredientsBtn">
-                <img className="ingredient" src={cheeseImg} alt="cheese"/>
-                <span>Cheese</span>
-                <span>{products.cheese}</span>
-                <button onClick={() => { increaseQuantity('cheese'); handleCreateElement('Cheese'); }}>+</button>
-                <button onClick={() => decreaseQuantity('cheese')}>-</button>
-            </div>
+            {INGREDIENTS.map((ingredient) => (
+                <div key={ingredient.name} className="IngredientsBtn">
+                    <img className="ingredient" src={ingredient.image} alt={ingredient.name} />
+                    <span>{ingredient.name}</span>
+                    <span>{selectedIngredients[ingredient.name] || 0}</span>
+                    <button onClick={() => increaseQuantity(ingredient.name)}>+</button>
+                    <button onClick={() => decreaseQuantity(ingredient.name)}>-</button>
+                </div>
+            ))}
         </div>
-    )
+    );
 }
 
 export default Ingredients;
