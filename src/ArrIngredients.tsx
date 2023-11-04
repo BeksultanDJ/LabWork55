@@ -4,8 +4,8 @@ import cheeseImg from './assets/cheese.png';
 import cutletImg from './assets/cutlet.png';
 
 export const INGREDIENTS = [
-    { name: 'Bacon', price: 10, image: baconImg },
-    { name: 'Salad', price: 5, image: saladImg },
-    { name: 'Meat', price: 15, image: cutletImg },
-    { name: 'Cheese', price: 8, image: cheeseImg },
+    { name: 'Salad', price: 10, image: saladImg },
+    { name: 'Cheese', price: 50, image: cheeseImg },
+    { name: 'Meat', price: 80, image: cutletImg },
+    { name: 'Bacon', price: 60, image: baconImg },
 ];
